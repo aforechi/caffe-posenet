@@ -1,4 +1,4 @@
-caffe_root = '.../caffe-posenet/'  # Change to your directory to caffe-posenet
+caffe_root = '/home/avelino/caffe-posenet/'  # Change to your directory to caffe-posenet
 import sys
 sys.path.insert(0, caffe_root + 'python')
 
@@ -8,8 +8,18 @@ import caffe
 import random
 import cv2
 
-directory = '.../CambridgeLandmarks/Kings/'
-dataset = 'dataset_train.txt'
+from optparse import OptionParser
+
+parser = OptionParser()
+parser.add_option("-p", "--path", dest="path", default="/media/avelino/logs/posenet/KingsCollege/",
+                  help="read dataset images from dir")
+parser.add_option("-f", "--file", dest="file", default="dataset_train.txt", 
+                  help="read dataset filenames")
+
+(options, args) = parser.parse_args()
+
+directory = options.path
+dataset = options.file
 
 poses = []
 images = []
