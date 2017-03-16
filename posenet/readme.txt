@@ -1,5 +1,8 @@
 #installation instructions
-mkdir build && cmake .. && make
+mkdir build && cd build
+#cmake -DCUDNN_INCLUDE="/usr/local/cudnn-5.0/include" -DCUDNN_LIBRARY="/usr/local/cudnn-5.0/lib64/libcudnn.so" .. 
+cmake -DUSE_CUDNN=OFF ..
+make
 cd ../python/ && for req in $(cat requirements.txt); do sudo pip install $req; done
 
 #dataset preparation
@@ -9,11 +12,7 @@ cd ../python/ && for req in $(cat requirements.txt); do sudo pip install $req; d
 #run test
 #Change line 13 to the appropriate directories in test_posenet.py
 #Change source and mean_file parameters in train_kingscollege.prototxt
-python scripts/test_posenet.py --model /dados/posenet/PoseNet/train_kingscollege.prototxt --weights /dados/posenet/PoseNet/weights_kingscollege.caffemodel --iter 343
-python scripts/test_posenet.py --model /dados/posenet/PoseNet/train_oldhospital.prototxt --weights /dados/posenet/PoseNet/weights_oldhospital.caffemodel --iter 182
-python scripts/test_posenet.py --model /dados/posenet/PoseNet/train_shopfacade.prototxt --weights /dados/posenet/PoseNet/weights_shopfacade.caffemodel --iter 103
-python scripts/test_posenet.py --model /dados/posenet/PoseNet/train_stmaryschurch.prototxt --weights /dados/posenet/PoseNet/weights_stmaryschurch.caffemodel --iter 530
-python scripts/test_posenet.py --model /dados/posenet/PoseNet/train_street.prototxt --weights /dados/posenet/PoseNet/weights_street.caffemodel --iter 2923
+./scripts/test_posenet_all.sh
 
 #run train
 #Change first line to the appropriate directories in solver_posenet.prototxt
