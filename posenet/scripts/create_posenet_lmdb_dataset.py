@@ -15,7 +15,8 @@ parser.add_option("-p", "--path", dest="path", default="/media/avelino/logs/pose
                   help="read dataset images from dir")
 parser.add_option("-f", "--file", dest="file", default="dataset_train.txt", 
                   help="read dataset filenames")
-
+parser.add_option("-s", "--sort", dest="sort", default=True,
+		  help="sort dataset filenames")
 (options, args) = parser.parse_args()
 
 directory = options.path
@@ -41,7 +42,10 @@ with open(directory+dataset) as f:
         images.append(directory+fname)
 
 r = list(range(len(images)))
-random.shuffle(r)
+if args.sort:
+	images, poses = zip(*sorted(zip(images, poses)))
+else:
+	random.shuffle(r)
 
 print 'Creating PoseNet Dataset.'
 env = lmdb.open('posenet_dataset_lmdb', map_size=int(1e12))

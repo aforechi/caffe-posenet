@@ -59,7 +59,9 @@ for i in range(0, args.iter):
 median_result = np.median(results,axis=0)
 print 'Median error ', median_result[0], 'm  and ', median_result[1], 'degrees.'
 
-np.savetxt('results.txt', results, delimiter=' ')
+#np.savetxt('results.txt', results, delimiter=' ')
+with open('results.txt', 'a') as median_file:
+	median_file.write('%f, %f\n' % (median_result[0], median_result[1]) )
 
 print 'Success!'
 
